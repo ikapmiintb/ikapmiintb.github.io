@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graha Mahbub Djunaidi | IKA PMII NTB</title>
+    
+    <!-- Google Fonts: Montserrat & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Chart.js for Transparency Dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0A1F44',    // Deep Navy Blue
+                            blue: '#1E3A8A',    // Royal Blue
+                            yellow: '#FACC15',  // Vibrant Mustard
+                            green: '#10B981',   // Emerald Green
+                            light: '#F8FAFC',   // Off-White
+                            gray: '#64748B'     // Slate Gray
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.1)',
+                        'glow': '0 0 20px rgba(250, 204, 21, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Utilities */
+        body {
+            background-color: #F8FAFC;
+            color: #0A1F44;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            background: rgba(10, 31, 68, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hero Background with animated gradient to simulate modern depth */
+        .hero-bg {
+            background: linear-gradient(135deg, #0A1F44 0%, #1E3A8A 100%);
+            position: relative;
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Progress Bar Animation */
+        @keyframes fillProgress {
+            from { width: 0; }
+            to { width: 49%; } /* Target percentage */
+        }
+        .progress-fill {
+            animation: fillProgress 2s ease-out forwards;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #0A1F44; border-radius: 4px; }
+
+        /* Hide scrollbar for live feed but allow scroll */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-yellow selection:text-brand-navy">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo Area -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-brand-yellow rounded-full flex items-center justify-center font-display font-bold text-brand-navy text-xl shadow-glow">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-white text-lg leading-tight tracking-wide">GRAHA<br><span class="text-brand-yellow text-sm">MAHBUB DJUNAIDI</span></h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#beranda" class="text-white hover:text-brand-yellow font-medium transition-colors text-sm">Beranda</a>
+                    <a href="#sejarah" class="text-gray-300 hover:text-white font-medium transition-colors text-sm">Sejarah</a>
+                    <a href="#program" class="text-gray-300 hover:text-white font-medium transition-colors text-sm">Program Wakaf</a>
+                    <a href="#transparansi" class="text-gray-300 hover:text-white font-medium transition-colors text-sm">Transparansi</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="#program" class="bg-brand-yellow hover:bg-yellow-400 text-brand-navy font-bold px-6 py-2.5 rounded-full transition-all transform hover:scale-105 shadow-glow text-sm">
+                        WAKAF SEKARANG
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-white hover:text-brand-yellow focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero-bg min-h-[90vh] flex items-center justify-center pt-20 relative overflow-hidden">
+        <!-- Floating elements for tech vibe -->
+        <div class="absolute top-1/4 left-10 w-32 h-32 bg-brand-blue rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-10 w-40 h-40 bg-brand-green rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse" style="animation-delay: 2s;"></div>
+
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10 reveal">
+            <span class="inline-block py-1 px-3 rounded-full bg-white/10 text-brand-yellow font-semibold text-xs sm:text-sm tracking-wider mb-6 border border-brand-yellow/30 backdrop-blur-sm">
+                BANGUN WARISAN, CETAK SEJARAH
+            </span>
+            <h1 class="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white mb-6 leading-tight drop-shadow-lg">
+                Membangun Monumen Pergerakan: <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-yellow-200">Graha Mahbub Djunaidi</span>
+            </h1>
+            <p class="font-sans text-gray-200 text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                Lebih dari sekadar bangunan fisik. Ini adalah pusat kaderisasi, peradaban, dan kebangkitan intelektual Ahlussunnah wal Jama'ah di kawasan Timur Nusantara.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#program" class="w-full sm:w-auto bg-brand-yellow hover:bg-yellow-400 text-brand-navy font-bold px-8 py-4 rounded-full transition-all transform hover:-translate-y-1 shadow-glow text-lg flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-wallet"></i> Tunaikan Wakaf
+                </a>
+                <a href="#desain" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/30 font-medium px-8 py-4 rounded-full transition-all backdrop-blur-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> Lihat Desain
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Builder / Dashboard (Floating Over Hero) -->
+    <div class="max-w-6xl mx-auto px-4 relative z-20 -mt-20 sm:-mt-28 reveal">
+        <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Counter 1 -->
+                <div class="text-center md:text-left md:border-r border-gray-200 pr-4">
+                    <p class="text-sm text-brand-gray font-semibold mb-1 uppercase tracking-wider">Dana Terkumpul</p>
+                    <h3 class="font-display font-bold text-3xl sm:text-4xl text-brand-navy mb-2">
+                        Rp <span id="dana-terkumpul" class="odometer" data-target="2450000000">0</span>
+                    </h3>
+                    <p class="text-xs text-brand-green font-medium"><i class="fa-solid fa-arrow-trend-up"></i> 49% dari target Rp 5 Miliar</p>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="flex flex-col justify-center md:border-r border-gray-200 pr-4">
+                    <div class="flex justify-between text-sm font-semibold mb-2">
+                        <span class="text-brand-navy">Progres</span>
+                        <span class="text-brand-green">49%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3 sm:h-4 overflow-hidden">
+                        <div class="bg-gradient-to-r from-brand-green to-emerald-400 h-full rounded-full progress-fill relative">
+                            <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donators Count -->
+                <div class="text-center md:text-right flex flex-col justify-center">
+                    <p class="text-sm text-brand-gray font-semibold mb-1 uppercase tracking-wider">Total Partisipan</p>
+                    <div class="flex items-center justify-center md:justify-end gap-3">
+                        <div class="flex -space-x-3">
+                            <img class="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://placehold.co/100x100/1E3A8A/FFFFFF?text=A" alt="Avatar">
+                            <img class="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://placehold.co/100x100/10B981/FFFFFF?text=B" alt="Avatar">
+                            <img class="w-10 h-10 rounded-full border-2 border-white shadow-sm" src="https://placehold.co/100x100/FACC15/0A1F44?text=C" alt="Avatar">
+                        </div>
+                        <h3 class="font-display font-bold text-3xl text-brand-navy">
+                            <span id="total-donatur" class="odometer" data-target="1240">0</span>+
+                        </h3>
+                    </div>
+                    <p class="text-xs text-brand-gray mt-2">Sahabat telah berwakaf</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sejarah Section (Scrollytelling) -->
+    <section id="sejarah" class="py-24 bg-brand-light relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Text Content -->
+                <div class="reveal">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-1 bg-brand-yellow rounded"></div>
+                        <span class="font-display font-bold text-brand-navy uppercase tracking-widest text-sm">Sang Tokoh</span>
+                    </div>
+                    <h2 class="font-display font-black text-3xl sm:text-4xl text-brand-navy mb-6 leading-tight">
+                        Mengabdi Tanpa Henti, Mengukir Nama dari Hari ke Hari.
+                    </h2>
+                    <div class="space-y-4 text-brand-gray font-sans text-lg leading-relaxed">
+                        <p>
+                            Terpilih secara aklamasi sebagai Ketua Umum PB PMII Pertama pada tahun 1960, <strong class="text-brand-navy">Mahbub Djunaidi</strong> adalah manifestasi arsitektural dari warisan intelektual mahasiswa Islam.
+                        </p>
+                        <p>
+                            Ia bukan sekadar organisatoris; ia adalah kolumnis legendaris, sastrawan pemenang penghargaan Dewan Kesenian Jakarta, dan pencipta mars Gerakan Pemuda Ansor. Kharismanya menembus batas kelas sosial.
+                        </p>
+                        <p>
+                            Pembangunan Graha ini didedikasikan untuk meneruskan pilar ketokohan beliau. Ruang ini akan menjadi inkubator bagi lahirnya ribuan 'Mahbub' baru di tanah Nusa Tenggara Barat.
+                        </p>
+                    </div>
+                </div>
+                <!-- Image / Graphics -->
+                <div class="relative reveal delay-200">
+                    <div class="absolute inset-0 bg-brand-yellow rounded-3xl transform translate-x-4 translate-y-4 shadow-lg"></div>
+                    <img src="https://placehold.co/800x1000/0A1F44/FFFFFF?text=Potret+Sejarah+Mahbub+Djunaidi" alt="Mahbub Djunaidi" class="relative z-10 rounded-3xl shadow-2xl w-full object-cover h-[500px] transition-transform duration-700 hover:scale-[1.02] grayscale hover:grayscale-0">
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -left-6 z-20 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 border border-gray-100 animate-bounce" style="animation-duration: 3s;">
+                        <div class="w-12 h-12 bg-brand-green/20 text-brand-green rounded-full flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-feather-pointed"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-brand-navy font-display">1960 - 1967</p>
+                            <p class="text-xs text-brand-gray font-medium">Ketua Umum PB PMII Pertama</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Donasi (The Core Action) -->
+    <section id="program" class="py-24 bg-white relative">
+        <!-- Decorative Background -->
+        <div class="absolute top-0 w-full h-1/2 bg-brand-navy/5 skew-y-3 transform origin-top-left -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+            <h2 class="font-display font-black text-3xl sm:text-4xl text-brand-navy mb-4">Pilih Jalur Wakaf Anda</h2>
+            <p class="text-brand-gray font-sans max-w-2xl mx-auto mb-16">Mari menjadi bagian dari sejarah. Setiap rupiah yang disalurkan akan dicatat sebagai amal jariyah yang tak terputus (Cash Waqf).</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                
+                <!-- Card 1: Prioritas Wakaf Uang -->
+                <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-glow hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-brand-yellow text-brand-navy text-xs font-bold px-3 py-1 rounded-bl-xl z-10">PRIORITAS UTAMA</div>
+                    <div class="w-14 h-14 bg-brand-green/10 text-brand-green rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-green group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-brand-navy mb-2">Wakaf Uang Digital</h3>
+                    <p class="text-sm text-brand-gray mb-6 h-16">Berdonasi mulai dari nominal terjangkau. Bebas biaya admin (MDR QRIS 0%). Dana langsung dialokasikan untuk pembangunan fisik.</p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <button class="w-full text-left px-4 py-3 border border-gray-200 rounded-xl hover:border-brand-yellow hover:bg-yellow-50 font-medium text-brand-navy transition-colors">Rp 50.000</button>
+                        <button class="w-full text-left px-4 py-3 border border-brand-yellow bg-yellow-50 rounded-xl font-bold text-brand-navy transition-colors flex justify-between items-center shadow-sm">
+                            Rp 100.000 <i class="fa-solid fa-check-circle text-brand-green"></i>
+                        </button>
+                        <button class="w-full text-left px-4 py-3 border border-gray-200 rounded-xl hover:border-brand-yellow hover:bg-yellow-50 font-medium text-brand-navy transition-colors text-gray-400">Nominal Lainnya...</button>
+                    </div>
+                    
+                    <button class="w-full bg-brand-navy hover:bg-brand-blue text-white font-bold py-4 rounded-xl transition-colors shadow-lg flex justify-center items-center gap-2">
+                        Wakaf Sekarang <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Card 2: Material -->
+                <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-brand-blue/10 text-brand-blue rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-trowel-bricks"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-brand-navy mb-2">Infaq Material</h3>
+                    <p class="text-sm text-brand-gray mb-6 h-16">Konversi uang Anda menjadi material spesifik. Donatur akan mendapatkan *update* saat material dibeli dan dipasang.</p>
+                    
+                    <ul class="space-y-3 mb-8 text-sm text-brand-navy font-medium">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-cube text-brand-gray"></i> 10 Sak Semen (Rp 650.000)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-layer-group text-brand-gray"></i> 1000 Bata Merah (Rp 800.000)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-bars text-brand-gray"></i> Besi Beton Ulir (Rp 1.500.000)</li>
+                    </ul>
+                    
+                    <button class="w-full bg-white border-2 border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white font-bold py-3.5 rounded-xl transition-colors mt-auto flex justify-center items-center gap-2">
+                        Pilih Material
+                    </button>
+                </div>
+
+                <!-- Card 3: Naming Opportunities -->
+                <div class="bg-gradient-to-br from-brand-navy to-brand-blue rounded-3xl p-8 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-white relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full filter blur-xl transform translate-x-10 -translate-y-10 group-hover:bg-brand-yellow/20 transition-colors duration-500"></div>
+                    <div class="w-14 h-14 bg-white/10 backdrop-blur-sm text-brand-yellow rounded-2xl flex items-center justify-center text-2xl mb-6 border border-white/20">
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-2">Naming Opportunities</h3>
+                    <p class="text-sm text-gray-300 mb-6 h-16">Eksklusif untuk donatur besar atau kolektif angkatan/cabang. Nama Anda akan diabadikan secara permanen pada ruangan gedung.</p>
+                    
+                    <div class="bg-white/10 rounded-xl p-4 mb-8 border border-white/10 backdrop-blur-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-sm">Ruang Rapat Utama</span>
+                            <span class="text-xs bg-brand-green px-2 py-1 rounded text-white font-bold">Tersedia</span>
+                        </div>
+                        <p class="text-xl font-display font-bold text-brand-yellow">Rp 50 Juta</p>
+                    </div>
+                    
+                    <button class="w-full bg-brand-yellow hover:bg-yellow-400 text-brand-navy font-bold py-4 rounded-xl transition-colors shadow-glow mt-auto flex justify-center items-center gap-2">
+                        Reservasi Ruangan
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Dasbor Transparansi -->
+    <section id="transparansi" class="py-24 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="text-center mb-12">
+                <h2 class="font-display font-black text-3xl sm:text-4xl text-brand-navy mb-4">Transparansi Keuangan Absolut</h2>
+                <p class="text-brand-gray font-sans max-w-2xl mx-auto">Kami mengadopsi standar akuntabilitas filantropi global. Setiap rupiah yang masuk dan keluar dilaporkan secara waktu nyata (*real-time*).</p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Chart (Spans 2 columns on desktop) -->
+                <div class="lg:col-span-2 bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-display font-bold text-xl text-brand-navy">Alokasi Anggaran (RAB)</h3>
+                        <button class="text-sm text-brand-blue font-medium hover:underline">Unduh Laporan Lengkap (PDF)</button>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-full md:w-1/2 relative">
+                            <!-- Chart Canvas -->
+                            <canvas id="allocationChart" height="250"></canvas>
+                        </div>
+                        <div class="w-full md:w-1/2 space-y-4">
+                            <!-- Custom Legend -->
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#10B981]"></div><span class="text-sm font-medium text-brand-navy">Konstruksi Utama</span></div>
+                                <span class="text-sm font-bold text-brand-navy">60%</span>
+                            </div>
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#FACC15]"></div><span class="text-sm font-medium text-brand-navy">Interior & Mebeler</span></div>
+                                <span class="text-sm font-bold text-brand-navy">20%</span>
+                            </div>
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#3B82F6]"></div><span class="text-sm font-medium text-brand-navy">Perizinan & Legal</span></div>
+                                <span class="text-sm font-bold text-brand-navy">10%</span>
+                            </div>
+                            <div class="flex items-center justify-between pb-2">
+                                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-[#94A3B8]"></div><span class="text-sm font-medium text-brand-navy">Biaya Tak Terduga</span></div>
+                                <span class="text-sm font-bold text-brand-navy">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Feed Column -->
+                <div class="bg-brand-navy rounded-3xl p-8 shadow-xl text-white relative overflow-hidden flex flex-col">
+                    <div class="absolute top-0 right-0 p-6 flex items-center gap-2">
+                        <span class="relative flex h-3 w-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
+                        </span>
+                        <span class="text-xs font-bold tracking-wider text-brand-green">LIVE</span>
+                    </div>
+                    
+                    <h3 class="font-display font-bold text-xl mb-6 text-white border-b border-white/10 pb-4">Aktivitas Terbaru</h3>
+                    
+                    <!-- Scrolling Feed container -->
+                    <div class="flex-1 overflow-y-auto no-scrollbar space-y-4 pr-2">
+                        <div class="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm transform transition-all hover:scale-105 cursor-default">
+                            <p class="text-xs text-gray-400 mb-1"><i class="fa-regular fa-clock"></i> 2 menit yang lalu</p>
+                            <p class="text-sm font-medium">Hamba Allah dari Mataram mewakafkan</p>
+                            <p class="text-brand-yellow font-bold text-lg">Rp 1.000.000</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm transform transition-all hover:scale-105 cursor-default">
+                            <p class="text-xs text-gray-400 mb-1"><i class="fa-regular fa-clock"></i> 15 menit yang lalu</p>
+                            <p class="text-sm font-medium">Alumni '98 mewakafkan</p>
+                            <p class="text-brand-yellow font-bold text-lg">Rp 5.000.000</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm transform transition-all hover:scale-105 cursor-default">
+                            <p class="text-xs text-gray-400 mb-1"><i class="fa-regular fa-clock"></i> 1 jam yang lalu</p>
+                            <p class="text-sm font-medium">Sahabat Budi mewakafkan</p>
+                            <p class="text-brand-yellow font-bold text-lg">Rp 100.000</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4 border border-white/10 backdrop-blur-sm transform transition-all hover:scale-105 cursor-default">
+                            <p class="text-xs text-gray-400 mb-1"><i class="fa-regular fa-clock"></i> 3 jam yang lalu</p>
+                            <p class="text-sm font-medium">Sahabat Rina mewakafkan</p>
+                            <p class="text-brand-yellow font-bold text-lg">Rp 250.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gamifikasi & Leaderboard -->
+    <section class="py-24 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 text-brand-yellow rounded-full mb-4 text-3xl">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h2 class="font-display font-black text-3xl sm:text-4xl text-brand-navy mb-4">Klasemen Kebaikan</h2>
+                <p class="text-brand-gray font-sans">Kompetisi dalam kebaikan (*Fastabiqul Khairat*). Peringkat tertinggi berdasarkan akumulasi wakaf cabang atau angkatan.</p>
+            </div>
+
+            <!-- Leaderboard List -->
+            <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+                <!-- Top 1 -->
+                <div class="bg-gradient-to-r from-yellow-50 to-white p-6 border-b border-gray-100 flex items-center justify-between transform transition hover:scale-[1.01]">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-yellow text-white flex items-center justify-center font-bold text-lg shadow-glow">1</div>
+                        <div>
+                            <h4 class="font-display font-bold text-brand-navy text-lg">Cabang Mataram</h4>
+                            <p class="text-xs text-brand-gray"><i class="fa-solid fa-medal text-brand-yellow"></i> Lencana Sultan</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-display font-bold text-xl text-brand-navy">Rp 150 Jt</p>
+                    </div>
+                </div>
+                
+                <!-- Top 2 -->
+                <div class="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-100 flex items-center justify-between transform transition hover:scale-[1.01]">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center font-bold text-lg">2</div>
+                        <div>
+                            <h4 class="font-display font-bold text-brand-navy text-lg">Angkatan 1998</h4>
+                            <p class="text-xs text-brand-gray"><i class="fa-solid fa-medal text-gray-400"></i> Lencana Perak</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-display font-bold text-xl text-brand-navy">Rp 95 Jt</p>
+                    </div>
+                </div>
+
+                <!-- Top 3 -->
+                <div class="bg-gradient-to-r from-orange-50 to-white p-6 border-b border-gray-100 flex items-center justify-between transform transition hover:scale-[1.01]">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-orange-300 text-orange-800 flex items-center justify-center font-bold text-lg">3</div>
+                        <div>
+                            <h4 class="font-display font-bold text-brand-navy text-lg">Cabang Lombok Timur</h4>
+                            <p class="text-xs text-brand-gray"><i class="fa-solid fa-medal text-orange-400"></i> Lencana Perunggu</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-display font-bold text-xl text-brand-navy">Rp 60 Jt</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="text-brand-blue font-bold hover:underline transition-colors">Lihat Peringkat Lengkap <i class="fa-solid fa-angle-down"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-navy pt-20 pb-10 border-t-4 border-brand-yellow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-gray-300">
+                
+                <!-- Col 1 -->
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-brand-yellow rounded-full flex items-center justify-center font-display font-bold text-brand-navy text-sm">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h2 class="font-display font-bold text-white tracking-wide">IKA PMII NTB</h2>
+                    </div>
+                    <p class="text-sm font-light leading-relaxed mb-6">Mewujudkan Graha Mahbub Djunaidi sebagai episentrum kaderisasi dan intelektualitas di bumi gora.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-yellow hover:text-brand-navy transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-yellow hover:text-brand-navy transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-green hover:text-white transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h3 class="font-bold text-white mb-6 uppercase tracking-wider text-sm">Navigasi</h3>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="#beranda" class="hover:text-brand-yellow transition-colors">Beranda</a></li>
+                        <li><a href="#sejarah" class="hover:text-brand-yellow transition-colors">Sejarah Tokoh</a></li>
+                        <li><a href="#program" class="hover:text-brand-yellow transition-colors">Program Wakaf Uang</a></li>
+                        <li><a href="#transparansi" class="hover:text-brand-yellow transition-colors">Laporan Keuangan</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Validasi Sertifikat Digital</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: QRIS -->
+                <div>
+                    <h3 class="font-bold text-white mb-6 uppercase tracking-wider text-sm">Donasi Cepat (MDR 0%)</h3>
+                    <div class="bg-white p-3 rounded-xl inline-block mb-3">
+                        <!-- Placeholder QR Code -->
+                        <img src="https://placehold.co/150x150/FFFFFF/000000?text=QRIS" alt="QRIS Code" class="w-24 h-24 rounded">
+                    </div>
+                    <p class="text-xs font-light">Pindai menggunakan aplikasi perbankan atau e-wallet (GoPay, OVO, Dana). Bebas potongan biaya.</p>
+                </div>
+
+                <!-- Col 4: Security & Tech -->
+                <div>
+                    <h3 class="font-bold text-white mb-6 uppercase tracking-wider text-sm">Didukung Oleh</h3>
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <!-- Secure Badges Placeholders -->
+                        <div class="bg-white/10 px-3 py-1.5 rounded text-xs font-bold border border-white/20">Xendit / Midtrans</div>
+                        <div class="bg-white/10 px-3 py-1.5 rounded text-xs font-bold border border-white/20"><i class="fa-solid fa-lock text-brand-green"></i> PCI-DSS</div>
+                        <div class="bg-white/10 px-3 py-1.5 rounded text-xs font-bold border border-white/20">Fonnte API</div>
+                    </div>
+                    <p class="text-xs font-light text-gray-400">Seluruh transaksi diproses melalui Payment Gateway resmi dengan standar keamanan perbankan global.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-xs font-light text-gray-500">&copy; 2026 Tim IT IKA PMII NTB. Hak Cipta Dilindungi Undang-Undang.</p>
+                <div class="flex gap-4 text-xs font-light text-gray-500">
+                    <a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a>
+                    <a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile CTA Button (Visible only on mobile/tablet) -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur-md border-t border-gray-200 z-50">
+        <a href="#program" class="block w-full bg-brand-yellow text-brand-navy font-bold text-center py-4 rounded-xl shadow-glow text-lg">
+            WAKAF SEKARANG
+        </a>
+    </div>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Scroll-triggered Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15, // Trigger when 15% of element is visible
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // Unobserve after animating to optimize performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealOnScroll.observe(el);
+            });
+
+            // 2. Navbar Background Change on Scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-lg');
+                } else {
+                    navbar.classList.remove('shadow-lg');
+                }
+            });
+
+            // 3. Odometer / Number Counter Animation function
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    // Easing effect (easeOutExpo)
+                    const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                    
+                    let currentVal = Math.floor(easeOut * (end - start) + start);
+                    
+                    // Format as Indonesian Rupiah/Thousand separator
+                    obj.innerHTML = currentVal.toLocaleString('id-ID');
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // Trigger odometers when the trust dashboard is revealed
+            const odometerElements = document.querySelectorAll('.odometer');
+            const odometerObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        const targetVal = parseInt(entry.target.getAttribute('data-target'), 10);
+                        animateValue(entry.target, 0, targetVal, 2500); // 2.5 seconds duration
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            odometerElements.forEach(el => odometerObserver.observe(el));
+
+
+            // 4. Initialize Chart.js for Transparency Dashboard
+            const ctx = document.getElementById('allocationChart');
+            if(ctx) {
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Konstruksi Utama', 'Interior & Mebeler', 'Perizinan', 'Biaya Tak Terduga'],
+                        datasets: [{
+                            data: [60, 20, 10, 10],
+                            backgroundColor: [
+                                '#10B981', // Green
+                                '#FACC15', // Yellow
+                                '#3B82F6', // Blue
+                                '#94A3B8'  // Slate
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '75%',
+                        plugins: {
+                            legend: {
+                                display: false // We built a custom HTML legend instead
+                            },
+                            tooltip: {
+                                backgroundColor: '#0A1F44',
+                                titleFont: { family: 'Poppins', size: 13 },
+                                bodyFont: { family: 'Poppins', size: 14, weight: 'bold' },
+                                padding: 12,
+                                displayColors: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + '%';
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true,
+                            duration: 2000,
+                            easing: 'easeOutQuart'
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
